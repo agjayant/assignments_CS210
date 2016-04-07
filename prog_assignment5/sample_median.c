@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "quick_sort.h"
+#include "heap_maxmin.h"
 
 double sqrt(double x);
 
@@ -24,7 +25,7 @@ int main(){
      
 	int sample[sample_size];
 
-	for (i=0;i<sample_size;i++) sample[i]= arr[i*i-2];
+	for (i=0;i<sample_size;i++) sample[i]= arr[i*i];
 //	for(i=0 ; i<sample_size;i++) printf("%d ",sample[i]);
 
 //	printf("\n\n");
@@ -39,8 +40,9 @@ int main(){
 
 	int arr_less[n];
 	int arr_great[n];
-	int count_less=0;
-	int count_great=0;
+
+
+	struct heapStruct *h;
 	int k=0,l=0;
 
 	int count_eq=0;
@@ -50,14 +52,14 @@ int main(){
 	for (i=0;i<n;i++){
 		if(sample_median > arr[i]){
 			
-			count_less ++;
+
 			arr_less[k]= arr[i];
 			k++;
 
 		}	
 		else if (sample_median < arr[i]){
 			
-			count_great ++;
+
 			arr_great[l]=arr[i];
 			l++;	
 		}
@@ -65,20 +67,37 @@ int main(){
 		else count_eq++;
 	}
 
-	printf("less: %d\n",count_less);
+	int error,temp;
 
-	printf("more: %d\n",count_great);
-	if(count_less == count_great){
-		printf("Median: %d" , sample_median);	
+	printf("less: %d\n",k);
+
+	printf("more: %d\n",l);
+	if(k==l){
+		printf("Median: %d\n" , sample_median);	
 		return 0;
 	}
-	else if (count_less > count_great){		
-		printf("error: %d", count_less+count_eq - n/2);	
+	else if (k >l){		
+
+		error = k+count_eq -n/2;
+		printf("error: %d\n", error);
+
+		h = initHeapfromArrayMine( arr_less,k+1 );
+		for(i=0;i<error;i++) temp = removeMax(h);
+		printf("Median: %d\n",temp);
+		freeHeap(h);
+
 	}
 
 
 	else {		
-		printf("error: %d", count_great+count_eq - n/2);	
+		error = l+count_eq -n/2;
+		printf("error: %d\n", error);
+
+		h = initHeapfromArray( arr_great,l+1 );
+		for(i=0;i<error;i++) temp = removeMin(h);
+		printf("Median: %d\n",temp);
+		freeHeap(h);
+	
 	}
 
 	 
