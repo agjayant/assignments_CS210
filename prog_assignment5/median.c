@@ -337,8 +337,14 @@ int main(){
         int i=0;
 
         int arr[n];
+	int check[n];
 
-        for (i=0;i<n;i++)  arr[i] = rand()/10000;
+        for (i=0;i<n;i++){  
+		scanf("%d",&arr[i]);
+		//arr[i] = rand()/10000;
+		check[i]=arr[i];
+	}
+
 //      for (i=0;i<n;i++)  scanf("%d",&arr[i]);
 
 //      for(i=0 ; i<n;i++) printf("%d ",arr[i]);
@@ -424,6 +430,8 @@ int main(){
                 freeHeap(h);
 
         }
+	sort_quick(check,0,n-1);
+	printf("check median: %d\n",check[n/2]);
 
 	printf("comparisons: %d",comp);
         return 0;
