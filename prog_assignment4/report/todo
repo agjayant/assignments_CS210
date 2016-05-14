@@ -1,0 +1,4 @@
+cache locality- locality of reference
+worst case sample for quick sort - how to avoid O(n^2) time- pivot element -median element- randomisation time
+Time analysis for both sorts
+hidden constants
